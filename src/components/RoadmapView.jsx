@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { courses } from '../data/courses';
 
 const semesterNames = {
@@ -14,6 +15,7 @@ const semesterNames = {
 };
 
 const RoadmapView = ({ onSelectCourse }) => {
+  const navigate = useNavigate();
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -99,17 +101,25 @@ const RoadmapView = ({ onSelectCourse }) => {
             ctx.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, endX, endY);
             ctx.stroke();
             
-            // วาดหัวลูกศรแบบเติมสี (ชี้ลง)
-            const arrowSize = 10;
+            // วาดหัวลูกศรแบบสวยงาม (รูปหยดน้ำชี้ลง)
+            const arrowSize = 12;
             
-            ctx.shadowBlur = 6;
-            ctx.fillStyle = `rgba(6, 182, 212, ${opacity})`;
+            // วาดเงาของหัวลูกศร
+            ctx.shadowColor = `rgba(6, 182, 212, ${opacity * 0.8})`;
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 2;
+            
+            // วาดหัวลูกศรแบบโค้งมน
+            ctx.fillStyle = `rgba(6, 182, 212, ${opacity + 0.2})`;
             ctx.beginPath();
             ctx.moveTo(endX, endY);
             ctx.lineTo(endX - arrowSize / 2, endY - arrowSize);
-            ctx.lineTo(endX + arrowSize / 2, endY - arrowSize);
+            ctx.quadraticCurveTo(endX, endY - arrowSize * 0.7, endX + arrowSize / 2, endY - arrowSize);
             ctx.closePath();
             ctx.fill();
+            
+       
             
             // รีเซ็ตเงา
             ctx.shadowBlur = 0;
@@ -156,7 +166,7 @@ const RoadmapView = ({ onSelectCourse }) => {
                 <div
                   key={course.id}
                   data-course-id={course.id}
-                  onClick={() => onSelectCourse && onSelectCourse(course)}
+                  onClick={() => navigate(`/course/${course.id}`)}
                   className="bg-gradient-to-br from-[#1e293b] to-[#0f172a] p-3 rounded-xl border-2 border-gray-700 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 cursor-pointer transition-all duration-300 transform hover:-translate-y-1 flex-shrink-0 w-[220px] flex flex-col"
                 >
                   <div className="text-blue-400 font-bold text-sm mb-1">{course.id}</div>

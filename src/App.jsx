@@ -6,12 +6,10 @@ import GPACalculatorView from './components/GPACalculatorView';
 import HonorsCalculatorView from './components/HonorsCalculatorView';
 import ProbationCheckerView from './components/ProbationCheckerView';
 import CoursesView from './components/CoursesView';
-import CoursePage from './components/CoursePage';
+import CourseDetail from './components/CourseDetail'; // เปลี่ยนจาก CoursePage
 
 import { menuItems } from './data/menuItems';
 import './index.css';
-
-
 
 // React Router
 import { Routes, Route } from "react-router-dom";
@@ -105,8 +103,8 @@ const App = () => {
             {/* UI หลักใช้ activeTab แบบเดิม */}
             <Route path="/" element={renderContent()} />
 
-            {/* หน้าแยกรายวิชา */}
-            <Route path="/course/:id" element={<CoursePage />} />
+            {/* หน้าแยกรายวิชา - ไปหน้ารีวิว */}
+            <Route path="/course/:id" element={<CourseDetail />} />
           </Routes>
         </main>
       </div>

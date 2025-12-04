@@ -1,0 +1,15 @@
+git add .
+git commit -m "แก้ UI หน้า Dashboard"
+git push
+
+ดู commit ทั้งหมด
+git log --oneline
+
+เช็คเอาต์กลับไป commit เก่า (โหมดอ่านอย่างเดียว)
+git checkout <รหัส commit>
+
+กลับมาที่ main
+git checkout main
+
+หรือจะย้อนโค้ดจริง ๆ (reset แบบ hard)
+git reset --hard <รหัส commit>
