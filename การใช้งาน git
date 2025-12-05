@@ -1,5 +1,5 @@
 git add .
-git commit -m "แก้ หน้า  road map "
+git commit -m "เพิ่มหน้า solo <index> "
 git push
 
 ดู commit ทั้งหมด
