@@ -6,7 +6,8 @@ import GPACalculatorView from './components/GPACalculatorView';
 import HonorsCalculatorView from './components/HonorsCalculatorView';
 import ProbationCheckerView from './components/ProbationCheckerView';
 import CoursesView from './components/CoursesView';
-import CourseDetail from './components/CourseDetail'; // เปลี่ยนจาก CoursePage
+import CourseDetail from './components/CourseDetail';
+import SoloLevelingLanding from './components/SoloLevelingLanding';
 
 import { menuItems } from './data/menuItems';
 import './index.css';
@@ -73,7 +74,8 @@ const App = () => {
     }
   };
 
-  return (
+  // Layout แบบมี Sidebar (สำหรับหน้า Dashboard และ Course Detail)
+  const DashboardLayout = ({ children }) => (
     <div className="min-h-screen bg-gray-900 text-gray-100">
       <header className="bg-gray-800 border-b border-gray-700 sticky top-0 z-10">
         <div className="flex items-center justify-between px-6 py-4">
@@ -99,16 +101,37 @@ const App = () => {
         />
 
         <main className="flex-1 p-6 lg:p-8">
-          <Routes>
-            {/* UI หลักใช้ activeTab แบบเดิม */}
-            <Route path="/" element={renderContent()} />
-
-            {/* หน้าแยกรายวิชา - ไปหน้ารีวิว */}
-            <Route path="/course/:id" element={<CourseDetail />} />
-          </Routes>
+          {children}
         </main>
       </div>
     </div>
+  );
+
+  return (
+    <Routes>
+      {/* หน้า Landing - เต็มจอ ไม่มี Sidebar */}
+      <Route path="/" element={<SoloLevelingLanding />} />
+
+      {/* หน้า Dashboard - มี Sidebar */}
+      <Route 
+        path="/dashboard" 
+        element={
+          <DashboardLayout>
+            {renderContent()}
+          </DashboardLayout>
+        } 
+      />
+
+      {/* หน้ารายละเอียดวิชา - มี Sidebar */}
+      <Route 
+        path="/course/:id" 
+        element={
+          <DashboardLayout>
+            <CourseDetail />
+          </DashboardLayout>
+        } 
+      />
+    </Routes>
   );
 };
 
